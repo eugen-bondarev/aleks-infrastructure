@@ -4,3 +4,4 @@ kubeconfig
 node_modules
 /.env
 *.log
+tmp

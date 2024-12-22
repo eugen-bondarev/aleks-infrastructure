@@ -1,11 +1,6 @@
 {
-  "name": "k3s-test",
+  "name": "aleks-app",
   "version": "1.0.0",
-  "description": "``` curl -sfL https://get.k3s.io | sh - ```",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",

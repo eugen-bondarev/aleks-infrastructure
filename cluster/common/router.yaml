@@ -15,11 +15,14 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: frontend
+  name: common-cert
 spec:
   secretName: tls-prod
   dnsNames:
+    - web.app-aleks.de
+    - web.backend.app-aleks.de
     - web.staging.app-aleks.de
+    - web.staging.backend.app-aleks.de
   issuerRef:
     name: acme
     kind: Issuer
@@ -48,6 +51,26 @@ spec:
     - web.staging.app-aleks.de
     secretName: tls-prod
   rules:
+  - host: web.app-aleks.de
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: aleks-web-service
+            port:
+              number: 80
+  - host: web.backend.app-aleks.de
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: aleks-backend-service
+            port:
+              number: 80
   - host: web.staging.app-aleks.de
     http:
       paths:
@@ -55,6 +78,16 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: frontend-service
+            name: aleks-web-staging-service
             port:
-              number: 3000
+              number: 80
+  - host: web.staging.backend.app-aleks.de
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: aleks-backend-staging-service
+            port:
+              number: 80

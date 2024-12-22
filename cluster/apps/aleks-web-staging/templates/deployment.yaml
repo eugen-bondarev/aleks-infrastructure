@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aleks-web-staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aleks-web-staging
+  template:
+    metadata:
+      labels:
+        app: aleks-web-staging
+    spec:
+      containers:
+      - name: aleks-web-staging
+        image: europe-west4-docker.pkg.dev/aleks-app/cloud-run-source-deploy/aleks-app-web/aleks-app-web:latest
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - secretRef:
+            name: aleks-web-staging-env
+      imagePullSecrets:
+      - name: registry-access-europe-west4
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aleks-web-staging-service
+spec:
+  type: ClusterIP
+  selector:
+    app: aleks-web-staging
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

@@ -1,37 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: aleks-backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      app: aleks-backend
   template:
     metadata:
       labels:
-        app: frontend
+        app: aleks-backend
     spec:
       containers:
-      - name: frontend
-        image: europe-west4-docker.pkg.dev/aleks-app/cloud-run-source-deploy/aleks-app-web/aleks-app-web:latest
+      - name: aleks-backend
+        image: europe-west3-docker.pkg.dev/aleks-app/cloud-run-source-deploy/aleks-backend-v3/aleks-backend-v3:latest
         ports:
         - containerPort: 3000
         envFrom:
         - secretRef:
-            name: frontend-env
+            name: aleks-backend-env
       imagePullSecrets:
-      - name: registry-secret
+      - name: registry-access-europe-west3
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-service
+  name: aleks-backend-service
 spec:
   type: ClusterIP
   selector:
-    app: frontend
+    app: aleks-backend
   ports:
     - protocol: TCP
-      port: 3000
+      port: 80
       targetPort: 3000
