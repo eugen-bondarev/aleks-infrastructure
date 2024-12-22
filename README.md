@@ -2,6 +2,23 @@ I love Google Cloud Run but don't want to overpay for it.
 
 This is an attempt to create a performant and cloud agnostic K3s cluster that is stupid simple to set up and manage.
 
+## Limitations
+
+- Right now the cluster is running on a single node.
+
+## Roadmap
+
+- [ ] Add a persistent storage solution to the cluster.
+- [ ] Host a postgres instance in the cluster (requires persistent storage)
+- [ ] Add a monitoring solution to the cluster.
+- [ ] Add a logging solution to the cluster.
+
+## Useful commands
+
+- `kubectl rollout restart deployment/aleks-web-staging`
+- `kubectl rollout restart deployment/aleks-backend`
+- `kubectl rollout restart deployment/aleks-web`
+
 ## When setting up on a new VM
 
 1. Install K3s (a Kubernetes distribution)
