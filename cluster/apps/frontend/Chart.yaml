@@ -1,0 +1,5 @@
+version: 0.1.0
+apiVersion: v2
+name: frontend
+type: application
+appVersion: "1.16.0"

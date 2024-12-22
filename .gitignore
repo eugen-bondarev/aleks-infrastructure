@@ -1,0 +1,6 @@
+kubeconfig
+*.secret.*
+*.secret
+node_modules
+/.env
+*.log
