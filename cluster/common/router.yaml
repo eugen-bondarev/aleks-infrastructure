@@ -19,6 +19,7 @@ metadata:
 spec:
   secretName: tls-prod
   dnsNames:
+    - db.app-aleks.de
     - web.app-aleks.de
     - web.backend.app-aleks.de
     - web.staging.app-aleks.de
@@ -81,13 +82,18 @@ spec:
             name: aleks-web-staging-service
             port:
               number: 80
-  - host: web.staging.backend.app-aleks.de
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: aleks-backend-staging-service
-            port:
-              number: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroute
+spec:
+  routes:
+    - match: Host(`db.app-aleks.de`)
+      kind: Rule
+      middlewares:
+        - name: adminer-auth
+          namespace: default
+      services:
+        - name: adminer-service
+          port: 80
